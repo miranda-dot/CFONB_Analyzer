@@ -34,6 +34,66 @@ Le directeur financier de JM Comptabilité souhaite automatiser le traitement de
 
 ## Diagramme de dépendances des fonctions
 
+```
+// Conversion du caractère signé en montant
+Montant decoderMontant(const char* montantStr, int nbDecimales);
+
+// Parsing d'une date JJMMAA
+DateCFONB parseDate(const char* dateStr);
+
+// Extraction d'une sous-chaîne (positions CFONB sont en base 1)
+void extraireChamp(const char* ligne, int debut, int fin, char* dest);
+
+// Affichage formaté d'un montant
+void afficherMontant(Montant m);
+
+// Comparaison de dates
+int comparerDates(DateCFONB d1, DateCFONB d2);
+
+// Parse une ligne selon son type
+RecordType detecterTypeLigne(const char* ligne);
+
+// Parse un enregistrement 01 ou 07
+int parseInfoCompte(const char* ligne, InfoCompte* info);
+
+// Parse un enregistrement 04
+int parseOperation(const char* ligne, Operation* op);
+
+// Parse un enregistrement 05 et l'ajoute à l'opération courante
+int parseComplement(const char* ligne, Operation* op);
+
+// Charge un fichier complet
+FichierCFONB* chargerFichier(const char* nomFichier);
+
+// Libère la mémoire
+void libererFichier(FichierCFONB* fichier);
+
+// Valide la structure d'un bloc (séquence 01-04-07)
+RapportValidation validerStructureBloc(BlocCompte* bloc);
+
+// Vérifie la cohérence du numéro de compte
+RapportValidation validerCoherenceCompte(BlocCompte* bloc);
+
+// Recalcule et vérifie le solde
+RapportValidation validerSolde(BlocCompte* bloc);
+
+// Validation complète d'un fichier
+RapportValidation* validerFichier(FichierCFONB* fichier, int* nbRapports);
+
+// Calcule les stats d'un bloc
+StatsCompte calculerStatsBloc(BlocCompte* bloc);
+
+// Affiche les stats de tous les comptes
+void afficherStatsFichier(FichierCFONB* fichier);
+
+// Recherche des opérations selon critères
+Operation** rechercherOperations(FichierCFONB* fichier,
+                                  const char* numeroCompte,
+                                  long montantMin,
+                                  DateCFONB* date,
+                                  int* nbResultats);
+```
+
 ## Répartition des tâches
 
 ## Compilation : Instructions pour compiler le projet <br>
