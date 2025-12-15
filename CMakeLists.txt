@@ -10,4 +10,7 @@ add_executable(CFONB_Analyzer main.c
         src/cfonb_utils.c
         include/cfonb_types.h
         include/cfonb_parser.h
-        src/main.c)
+        src/main.c
+        include/cfonb_stats.h
+        include/cfonb_utils.h
+        include/cfonb_validator.h)
