@@ -10,6 +10,16 @@ Il détaillera notamment :
 - La répartition des tâches qui en découle.
 </p>
 
+## Le besoin client
+
+Le directeur financier de JM Comptabilité souhaite automatiser le traitement de ces relevés. Il vous demande de développer un **outil en ligne de commande** capable de :
+
+- Lire et parser les fichiers CFONB120
+- Vérifier l'intégrité et la cohérence des données
+- Extraire des statistiques et indicateurs clés
+
+
+## Flux logique de l'application
 
 ## Diagramme de dépendances des fonctions
 
