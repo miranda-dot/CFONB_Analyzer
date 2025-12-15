@@ -643,7 +643,7 @@ Structure identique à l'enregistrement 01, avec le code `07`.
     - Chiffre : **0**
     - Signe : **crédit** (+)
 3. Montant complet : `0000001925107` & `0` = `00000019251070`
-4. Avec 2 décimales : 19 251 070 / 100 = **19 251,07 € (crédit)**
+4. Avec 2 décimales : 19 251 070 / 100 = **192 510,70 € (crédit)**
 
 
 **Exemple 2** : `0000000139719C` → **13 971,93 € (crédit)**
