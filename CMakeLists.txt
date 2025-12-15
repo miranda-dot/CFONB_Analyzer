@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.28.1)
 project(CFONB_Analyzer C)
 
 set(CMAKE_C_STANDARD 11)
