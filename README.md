@@ -33,6 +33,13 @@ Le directeur financier de JM Comptabilité souhaite automatiser le traitement de
 - FIN / Redemander si on veut des informations (?)
 
 ## Diagramme de dépendances des fonctions
+<p>Fonctions sans dépendances</p>
+
+```
+
+```
+
+<p>Fonctions dépendantes d'autres</p>
 
 ```
 // Conversion du caractère signé en montant
