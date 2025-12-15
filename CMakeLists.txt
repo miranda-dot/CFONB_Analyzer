@@ -3,4 +3,11 @@ project(CFONB_Analyzer C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(CFONB_Analyzer main.c)
+add_executable(CFONB_Analyzer main.c
+        src/cfonb_parser.h.c
+        src/cfonb_validator.c
+        src/cfonb_stats.c
+        src/cfonb_utils.c
+        include/cfonb_types.h
+        include/cfonb_parser.h
+        src/main.c)
