@@ -21,6 +21,17 @@ Le directeur financier de JM Comptabilité souhaite automatiser le traitement de
 
 ## Flux logique de l'application
 
+- DEBUT
+- Récupération du fichier
+- Validation du fichier
+- Récupérer les informations présentes dans le fichier, et les stocker dans les types appropriés
+- Lire les arguments passés
+- Pour chaque argument:
+- - Récupérer les informations recherchées
+- - Renvoyer l'affichage des infos recherchées
+- - Afficher les statistiques correspondantes (?)
+- FIN / Redemander si on veut des informations (?)
+
 ## Diagramme de dépendances des fonctions
 
 ## Répartition des tâches
