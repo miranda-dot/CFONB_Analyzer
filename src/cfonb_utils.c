@@ -47,3 +47,12 @@ Montant decoderMontant(const char* montantStr, int nbDecimales)
     return mt;
 
 }
+
+// Extraction d'une sous-chaîne (positions CFONB sont en base 1)
+void extraireChamp(const char* ligne, int debut, int fin, char* dest)
+{
+    int longueur = fin - debut + 1;
+
+    strncpy(dest, ligne + debut - 1, longueur);
+    dest[longueur] = '\0';
+}

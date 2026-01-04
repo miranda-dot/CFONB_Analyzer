@@ -11,7 +11,7 @@ int main(void) {
     decoderMontant("0000001925107A",2);
     decoderMontant("0000001925107J",2);
 
-
-
+    char rslt[10];
+    extraireChamp("0000001925107A",1,10, rslt);
 
 }

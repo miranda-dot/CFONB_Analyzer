@@ -7,7 +7,8 @@
 #include "cfonb_types.h"
 // Conversion du caractère signé en montant
 Montant decoderMontant(const char* montantStr, int nbDecimales);
-
+// Extraction d'une sous-chaîne (positions CFONB sont en base 1)
+void extraireChamp(const char* ligne, int debut, int fin, char* dest);
 
 
 #endif
