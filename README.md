@@ -33,30 +33,32 @@ Le directeur financier de JM Comptabilité souhaite automatiser le traitement de
 - FIN / Redemander si on veut des informations (?)
 
 ## Diagramme de dépendances des fonctions
-<p>Fonctions sans dépendances</p>
 
+__Etape 1:__
 ```
+// Charge un fichier complet
+FichierCFONB* chargerFichier(const char* nomFichier);
 
-```
+// Libère la mémoire
+void libererFichier(FichierCFONB* fichier);
 
-<p>Fonctions dépendantes d'autres</p>
-
-```
-// Conversion du caractère signé en montant
-Montant decoderMontant(const char* montantStr, int nbDecimales);
+// Extraction d'une sous-chaîne (positions CFONB sont en base 1)
+void extraireChamp(const char* ligne, int debut, int fin, char* dest);
 
 // Parsing d'une date JJMMAA
 DateCFONB parseDate(const char* dateStr);
 
-// Extraction d'une sous-chaîne (positions CFONB sont en base 1)
-void extraireChamp(const char* ligne, int debut, int fin, char* dest);
+// Conversion du caractère signé en montant
+Montant decoderMontant(const char* montantStr, int nbDecimales);
 
 // Affichage formaté d'un montant
 void afficherMontant(Montant m);
 
 // Comparaison de dates
 int comparerDates(DateCFONB d1, DateCFONB d2);
-
+```
+__Etape 2:__
+```
 // Parse une ligne selon son type
 RecordType detecterTypeLigne(const char* ligne);
 
@@ -69,12 +71,25 @@ int parseOperation(const char* ligne, Operation* op);
 // Parse un enregistrement 05 et l'ajoute à l'opération courante
 int parseComplement(const char* ligne, Operation* op);
 
-// Charge un fichier complet
-FichierCFONB* chargerFichier(const char* nomFichier);
+```
+__Etape 3:__
+```
+// Calcule les stats d'un bloc
+StatsCompte calculerStatsBloc(BlocCompte* bloc);
 
-// Libère la mémoire
-void libererFichier(FichierCFONB* fichier);
+// Affiche les stats de tous les comptes
+void afficherStatsFichier(FichierCFONB* fichier);
 
+// Recherche des opérations selon critères
+Operation** rechercherOperations(FichierCFONB* fichier,
+                                  const char* numeroCompte,
+                                  long montantMin,
+                                  DateCFONB* date,
+                                  int* nbResultats); 
+```
+
+__Etape 4:__
+```
 // Valide la structure d'un bloc (séquence 01-04-07)
 RapportValidation validerStructureBloc(BlocCompte* bloc);
 
@@ -87,19 +102,8 @@ RapportValidation validerSolde(BlocCompte* bloc);
 // Validation complète d'un fichier
 RapportValidation* validerFichier(FichierCFONB* fichier, int* nbRapports);
 
-// Calcule les stats d'un bloc
-StatsCompte calculerStatsBloc(BlocCompte* bloc);
-
-// Affiche les stats de tous les comptes
-void afficherStatsFichier(FichierCFONB* fichier);
-
-// Recherche des opérations selon critères
-Operation** rechercherOperations(FichierCFONB* fichier,
-                                  const char* numeroCompte,
-                                  long montantMin,
-                                  DateCFONB* date,
-                                  int* nbResultats);
 ```
+
 
 ## Répartition des tâches
 
