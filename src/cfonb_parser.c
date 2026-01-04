@@ -3,6 +3,3 @@
 //
 #include <stdio.h>
 #include "../include/cfonb_parser.h"
-
-// Charge un fichier complet
-FichierCFONB* chargerFichier(const char* nomFichier);

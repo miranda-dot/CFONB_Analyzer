@@ -3,8 +3,15 @@
 //
 #include <stdio.h>
 
+#include "../include/cfonb_utils.h"
+
 int main(void) {
     printf("Hello, les ingénieurs de l'ENSIM !\n");
 
-    return 0;
+    decoderMontant("0000001925107A",2);
+    decoderMontant("0000001925107J",2);
+
+
+
+
 }

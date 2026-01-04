@@ -3,6 +3,7 @@
 //
 #ifndef TYPES
 #define TYPES
+
 // Types d'enregistrements CFONB
 typedef enum {
     RECORD_OLD_BALANCE = 1,    // 01 - Ancien solde

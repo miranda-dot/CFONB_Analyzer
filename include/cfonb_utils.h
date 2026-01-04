@@ -4,4 +4,10 @@
 #ifndef UTILS
 #define UTILS
 
+#include "cfonb_types.h"
+// Conversion du caractère signé en montant
+Montant decoderMontant(const char* montantStr, int nbDecimales);
+
+
+
 #endif
