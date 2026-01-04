@@ -1,3 +1,5 @@
+/!\\ Les dates des premiers commits ne sont pas représentatives, le contenu de ces commits a été écris avant leur date de "push".
+
 # Compte-rendu de TP
 <p>
 Compte-rendu commun du projet. 
