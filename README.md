@@ -107,6 +107,37 @@ RapportValidation* validerFichier(FichierCFONB* fichier, int* nbRapports);
 
 ## Répartition des tâches
 
+Tristan:
+1)
+- chargerFichier
+- libererFichier
+- extraireChamp
+- decoderMontant
+2)
+- parseOperation
+- parseComplement
+3)
+- rechercherOperations
+4)
+- validerStructureBloc
+- validerCoherenceCompte
+
+Miranda:
+
+1)
+- parseDate
+- afficherMontant
+- comparerDate
+2)
+- detecterInfoCompte
+- parseInfoCompte
+3)
+- calculerStatsBloc
+- afficherStatsFichier
+4)
+- validerSolde
+- validerFichier
+
 ## Compilation : Instructions pour compiler le projet <br>
 ## Utilisation : Exemples de commandes <br>
 ## Fonctionnalités : Liste des fonctionnalités implémentées <br>
