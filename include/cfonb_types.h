@@ -1,8 +1,8 @@
 //
 // Created by i2202852 on 15/12/2025.
 //
-#ifndef cfonb_types
-#define cfonb_types
+#ifndef TYPES
+#define TYPES
 // Types d'enregistrements CFONB
 typedef enum {
     RECORD_OLD_BALANCE = 1,    // 01 - Ancien solde
