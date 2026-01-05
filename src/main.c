@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "../include/cfonb_utils.h"
+#include "../include/cfonb_parser.h"
 
 int main(void) {
     printf("Hello, les ingénieurs de l'ENSIM !\n");
@@ -13,5 +14,7 @@ int main(void) {
 
     char rslt[10];
     extraireChamp("0000001925107A",1,10, rslt);
+
+    chargerFichier("../data/dataExemple");
 
 }
