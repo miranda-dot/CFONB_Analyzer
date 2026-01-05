@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "cfonb_utils.h"
+
 // Charge un fichier complet
 /*// Fichier CFONB complet
 typedef struct {
@@ -64,4 +66,46 @@ void libererFichier(FichierCFONB* fichier)
     {
         free(fichier);
     }
+}
+
+// Parse un enregistrement 04
+/*
+// Une opération (enregistrement 04)
+typedef struct {
+    char numeroCompte[12];
+    char codeOperation[3];   // 2 + \0
+    DateCFONB dateOperation;
+    DateCFONB dateValeur;
+    char libelle[32];        // 31 + \0
+    Montant montant;
+    char reference[17];      // 16 + \0
+    // Compléments éventuels (04 peut avoir plusieurs 05)
+    char complements[5][71]; // Max 5 compléments de 70 chars
+    int nbComplements;
+} Operation;
+*/
+int parseOperation(const char* ligne, Operation* op)
+{
+    extraireChamp(ligne, 22, 32, op->numeroCompte); //num compte
+    extraireChamp(ligne, 8, 11, op->codeOperation); //codeOp
+
+    //
+    //DateCFONB date;
+    //extraireChamp(ligne, 35, 40, date); //date op
+    //Placeholder pour le parsing de la date et l'ajout dans la structure
+
+    //DateCFONB date;
+    //extraireChamp(ligne, 44, 49, date); //date val
+    //Placeholder pour le parsing de la date et l'ajout dans la structure
+
+    extraireChamp(ligne, 50, 80, op->libelle); //libelle
+    char* mont = malloc(strlen(ligne) + 1);
+    extraireChamp(ligne, 92, 105, mont); //montant
+    Montant m = decoderMontant(mont, 2);
+    free(mont);
+    op->montant = m;
+    extraireChamp(ligne, 106, 120, op->reference); //ref
+
+    return 0;
+
 }
