@@ -21,5 +21,11 @@ int main(void) {
     const char* ligneCFONB = "0412345ABCD67890EURN 98765432101XX250105NNN250105VIR SALAIRE JANVIER 2025         1234567XX0000001925107{SALAIRE MENSUEL";
 
     parseOperation(ligneCFONB, &op);
+    parseDate("021204");
+    parseDate("550101");
 
+    Montant m = {12345, SENS_CREDIT};
+    afficherMontant(m);
+
+    comparerDates(d1,d2);
 }
