@@ -4,67 +4,40 @@
 #include <stdio.h>
 #include "../include/cfonb_parser.h"
 
+#include  <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "cfonb_utils.h"
 
-// Charge un fichier complet
-/*// Fichier CFONB complet
-typedef struct {
-    char nomFichier[256];
-    BlocCompte* blocs;         // Tableau dynamique de blocs
-    int nbBlocs;
-    int capaciteBlocs;
-} FichierCFONB;
-*/
-FichierCFONB* chargerFichier(const char* nomFichier)
-{
-    FichierCFONB* fichier = (FichierCFONB*) malloc(sizeof(FichierCFONB));
-    strcpy(fichier->nomFichier, nomFichier);
-    FILE* f = fopen(nomFichier, "r");
-    if (f == NULL)
-    {
-        printf("Erreur d'ouverture du fichier\n");
-        return NULL;
-    }
-    char ligne[256];
-    /*
-    // Bloc complet d'un compte (01 + opérations + 07)
-typedef struct {
-    InfoCompte ancienSolde;    // Enregistrement 01
-    Operation* operations;     // Tableau dynamique d'opérations
-    int nbOperations;
-    int capaciteOperations;    // Pour la gestion dynamique
-    InfoCompte nouveauSolde;   // Enregistrement 07
-} BlocCompte;
 
-    // Informations de compte (enregistrements 01 et 07)
-typedef struct {
-    char codeBanque[6];      // 5 + \0
-    char codeGuichet[6];     // 5 + \0
-    char devise[4];          // 3 + \0 (EUR)
-    int nbDecimales;
-    char numeroCompte[12];   // 11 + \0
-    DateCFONB date;
-    char titulaire[51];      // 50 + \0
-    Montant solde;
-} InfoCompte;
-    */
-    while (fgets(ligne, sizeof(ligne), f) != NULL)
-    {
-        printf("%s", ligne);
-    }
-    libererFichier(fichier);
-
-    return fichier;
-}
 // Libère la mémoire
 void libererFichier(FichierCFONB* fichier)
 {
     if (fichier != NULL)
     {
         free(fichier);
+    }
+}
+
+
+RecordType detecterTypeLigne(const char* ligne) {
+
+    char type_str[3] = {ligne[0], ligne[1], '\0'};
+
+    int type_code = (type_str[0] - '0') * 10 + (type_str[1] - '0');
+
+    switch (type_code) {
+    case 1:
+        return RECORD_OLD_BALANCE;
+    case 4:
+        return RECORD_OPERATION;
+    case 5:
+        return RECORD_COMPLEMENT;
+    case 7:
+        return RECORD_NEW_BALANCE;
+    default:
+        return -1;
     }
 }
 
@@ -84,28 +57,73 @@ typedef struct {
     int nbComplements;
 } Operation;
 */
-int parseOperation(const char* ligne, Operation* op)
-{
-    extraireChamp(ligne, 22, 32, op->numeroCompte); //num compte
-    extraireChamp(ligne, 8, 11, op->codeOperation); //codeOp
+int parseOperation(const char* ligne, Operation* op) {
 
-    //
-    //DateCFONB date;
-    //extraireChamp(ligne, 35, 40, date); //date op
-    //Placeholder pour le parsing de la date et l'ajout dans la structure
+    if (strlen(ligne) < 120) {
+        return -1;
+    }
 
-    //DateCFONB date;
-    //extraireChamp(ligne, 44, 49, date); //date val
-    //Placeholder pour le parsing de la date et l'ajout dans la structure
+    if (ligne[0] != '0' || ligne[1] != '4') {
+        return -1;
+    }
 
-    extraireChamp(ligne, 50, 80, op->libelle); //libelle
-    char* mont = malloc(strlen(ligne) + 1);
-    extraireChamp(ligne, 92, 105, mont); //montant
-    Montant m = decoderMontant(mont, 2);
-    free(mont);
-    op->montant = m;
-    extraireChamp(ligne, 106, 120, op->reference); //ref
+    memset(op, 0, sizeof(Operation));
+
+    // num compte
+    extraireChamp(ligne, 22, 32, op->numeroCompte);
+
+    // code op
+    extraireChamp(ligne, 33, 34, op->codeOperation);
+
+    // date op
+    char dateOpStr[7];
+    extraireChamp(ligne, 35, 40, dateOpStr);
+    op->dateOperation = parseDate(dateOpStr);
+
+    //date val
+    char dateValStr[7];
+    extraireChamp(ligne, 44, 49, dateValStr);
+    op->dateValeur = parseDate(dateValStr);
+
+    // libelle
+    extraireChamp(ligne, 50, 80, op->libelle);
+    for (int i = 30; i >= 0 && op->libelle[i] == ' '; i--) {
+        op->libelle[i] = '\0';
+    }
+
+    // montant
+    char montantStr[14];
+    extraireChamp(ligne, 92, 104, montantStr);
+
+    char dernierChar = montantStr[12];
+    op->montant.sens = SENS_CREDIT;
+
+    if (dernierChar == '}') {
+        montantStr[12] = '0';
+        op->montant.sens = SENS_DEBIT;
+    } else if (dernierChar >= '{' && dernierChar <= '|') {
+        montantStr[12] = '0' + (dernierChar - '{');
+        op->montant.sens = SENS_CREDIT;
+    } else if (dernierChar >= 'A' && dernierChar <= 'I') {
+        montantStr[12] = '1' + (dernierChar - 'A');
+        op->montant.sens = SENS_DEBIT;
+    } else if (dernierChar >= 'J' && dernierChar <= 'R') {
+        montantStr[12] = '1' + (dernierChar - 'J');
+        op->montant.sens = SENS_CREDIT;
+    }
+
+    op->montant.centimes = 0;
+    for (int i = 0; i < 13; i++) {
+        if (isdigit(montantStr[i])) {
+            op->montant.centimes = op->montant.centimes * 10 + (montantStr[i] - '0');
+        }
+    }
+
+    // ref
+    extraireChamp(ligne, 105, 120, op->reference);
+    for (int i = 15; i >= 0 && op->reference[i] == ' '; i--) {
+        op->reference[i] = '\0';
+    }
 
     return 0;
-
 }

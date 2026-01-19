@@ -15,4 +15,7 @@ FichierCFONB* chargerFichier(const char* nomFichier);
 void libererFichier(FichierCFONB* fichier);
 // Parse un enregistrement 04
 int parseOperation(const char* ligne, Operation* op);
+// Parse une ligne selon son type
+RecordType detecterTypeLigne(const char* ligne);
+int parseOperation(const char* ligne, Operation* op);
 #endif

@@ -26,6 +26,7 @@ int main(void) {
 
     Montant m = {12345, SENS_CREDIT};
     afficherMontant(m);
-
-    comparerDates(d1,d2);
+    const char* ligne2 = "0116706    05036EUR2 50568354105  011225BREIZH EXOTIK EPICERIE                            0000000002826{  231";
+    detecterTypeLigne(ligne2);
+    parseOperation(ligne2, &op);
 }
