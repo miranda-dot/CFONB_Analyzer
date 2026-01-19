@@ -18,4 +18,9 @@ int parseOperation(const char* ligne, Operation* op);
 // Parse une ligne selon son type
 RecordType detecterTypeLigne(const char* ligne);
 int parseOperation(const char* ligne, Operation* op);
+
+int parseComplement(const char* ligne, Operation* op);
+
+// Charge un fichier complet
+FichierCFONB* chargerFichier(const char* nomFichier);
 #endif

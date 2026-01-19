@@ -60,25 +60,29 @@ void extraireChamp(const char* ligne, int debut, int fin, char* dest)
 // Parsing d'une date JJMMAA
 DateCFONB parseDate(const char* dateStr){
     DateCFONB date;
-
+    printf("\n Date entree dans le parseDate %s\n", dateStr);
     char jour_str[3] = {dateStr[0], dateStr[1], '\0'};
     char mois_str[3] = {dateStr[2], dateStr[3], '\0'};
     char annee_str[3] = {dateStr[4], dateStr[5], '\0'};
-
+    printf("str_Jour : %s", jour_str);
+    printf("str_Mois : %s", mois_str);
+    printf("str_Annee : %s", annee_str);
     int jour = atoi(jour_str);
     int mois = atoi(mois_str);
     int annee = atoi(annee_str);
-
+    printf("Jour : %d", jour);
+    printf("Mois : %d", mois);
+    printf("Annee : %d", annee);
     if (jour < 1 || jour > 31) {
-        printf("Erreur dans le parsing de la date, format incorrect : jour incorrect");
+        printf("\n Erreur dans le parsing de la date, format incorrect : jour incorrect");
     }
 
     if (mois < 1 || mois > 12) {
-        printf("Erreur dans le parsing de la date, format incorrect : mois incorrect");
+        printf("\n Erreur dans le parsing de la date, format incorrect : mois incorrect");
     }
 
     if (annee < 0 || annee > 99) {
-        printf("Erreur dans le parsing de la date, format incorrect : annee incorrecte");
+        printf("\n Erreur dans le parsing de la date, format incorrect : annee incorrecte");
     }
 
     date.jour = jour;

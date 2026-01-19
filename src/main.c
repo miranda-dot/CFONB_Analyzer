@@ -16,17 +16,22 @@ int main(void) {
     char rslt[10];
     extraireChamp("0000001925107A",1,10, rslt);
 
-    //chargerFichier("../data/dataExemple"); //WIP
+
     Operation op;
     const char* ligneCFONB = "0412345ABCD67890EURN 98765432101XX250105NNN250105VIR SALAIRE JANVIER 2025         1234567XX0000001925107{SALAIRE MENSUEL";
 
     parseOperation(ligneCFONB, &op);
-    parseDate("021204");
-    parseDate("550101");
 
     Montant m = {12345, SENS_CREDIT};
     afficherMontant(m);
     const char* ligne2 = "0116706    05036EUR2 50568354105  011225BREIZH EXOTIK EPICERIE                            0000000002826{  231";
     detecterTypeLigne(ligne2);
     parseOperation(ligne2, &op);
+    const char* ligne3 = "0516706    05036EUR2 5056835410505021225     NPYCPAM LOIRE-ATL";
+    parseComplement(ligne3, &op);
+
+    char* nomFichier = "../data/SOBANK_005458_5325715006702119-2025-12-03T03-15-38-297.cfonb.txt";
+    FichierCFONB* file =  chargerFichier(nomFichier);
+    libererFichier(file);
+
 }
